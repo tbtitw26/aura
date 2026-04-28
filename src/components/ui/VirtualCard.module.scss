@@ -1,0 +1,111 @@
+.cardWrapper {
+  perspective: 1000px;
+  width: 100%;
+}
+
+/* CARD */
+.card {
+  width: 100%;
+  aspect-ratio: 1.586 / 1;
+  border-radius: 16px;
+  padding: 24px;
+  position: relative;
+  overflow: hidden;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  background: linear-gradient(135deg, #111, #2a2a2a);
+  color: white;
+
+  box-shadow: 0 25px 60px -20px rgba(0, 0, 0, 0.4);
+
+  transition: transform 0.5s ease, box-shadow 0.5s ease;
+  transform-style: preserve-3d;
+
+  &:hover {
+    transform: rotateX(6deg) rotateY(-6deg) scale(1.02);
+    box-shadow: 0 35px 80px -20px rgba(0, 0, 0, 0.6);
+  }
+}
+
+/* BACKGROUND IMAGE LAYER */
+.bgOverlay {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+
+  opacity: 0.18;
+  background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCp-zF9vasla3pKkslx0H5e-vfbJWCKPLgMcz65f_a0d2IMWzz5EV-k5z5JRaqO0rwBbwLyyYEMoz7YmfEXdXgZStPhSqL2oqdAMqBKrMBkuDpc4g2cupJsGZtle-AjEVZzOmMdYhN3jJqhTdZ-hoQx7Dcu5JS1RZlCfu31Rfu8Z5JszeE0Tdt9dSFJgybMWcKtewd_RWtOeJ5Ist12rGnLTFW9t2BmEZnbCZRL1JjUOfJ1Kw_bPbUcgepL-nXAOx3l74gIHcEC3Zw");
+  background-size: cover;
+  background-position: center;
+}
+
+/* CONTENT */
+.content {
+  position: relative;
+  z-index: 2;
+
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* HEADER */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .logo {
+    font-weight: 300;
+    letter-spacing: 0.4em;
+    font-size: 18px;
+  }
+
+  span {
+    font-size: 28px;
+    opacity: 0.8;
+  }
+}
+
+/* CARD NUMBER */
+.cardInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.cardNumber {
+  font-size: 20px;
+  letter-spacing: 0.25em;
+  font-family: "Courier New", monospace;
+}
+
+/* DETAILS */
+.details {
+  display: flex;
+  justify-content: space-between;
+
+  font-size: 12px;
+  opacity: 0.6;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+/* BLUR EFFECT */
+.blurEffect {
+  position: absolute;
+  right: -60px;
+  bottom: -60px;
+
+  width: 180px;
+  height: 180px;
+
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 50%;
+  filter: blur(40px);
+  z-index: 1;
+}

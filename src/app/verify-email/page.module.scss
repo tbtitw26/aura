@@ -1,0 +1,475 @@
+// Container
+.container {
+  background: #fbf9f9;
+  color: #1b1c1c;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  -webkit-font-smoothing: antialiased;
+  
+  ::selection {
+    background: #c4c7c7;
+    color: #000000;
+  }
+}
+
+// Header
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 50;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px 32px;
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(24px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  border-bottom-color: #f5f5f5;
+
+  @media (max-width: 768px) {
+    padding: 16px 24px;
+  }
+}
+
+.logo {
+  color: #1a1a1a;
+  font-family: 'Noto Serif', serif;
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+// Main Content
+.main {
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 48px;
+  margin-top: 80px;
+
+  @media (max-width: 768px) {
+    padding: 60px 24px;
+    margin-top: 60px;
+  }
+}
+
+.contentWrapper {
+  max-width: 672px;
+  width: 100%;
+}
+
+// Glass Card
+.card {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.8) 0%, rgba(255, 255, 255, 0.4) 100%);
+  backdrop-filter: blur(20px);
+  border-top: 1px solid rgba(255, 255, 255, 0.6);
+  border-left: 1px solid rgba(255, 255, 255, 0.6);
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.02);
+  padding: 64px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+
+  @media (max-width: 768px) {
+    padding: 48px 32px;
+  }
+
+  @media (max-width: 480px) {
+    padding: 32px 24px;
+  }
+}
+
+.cardBg {
+  position: absolute;
+  top: -160px;
+  right: -160px;
+  width: 384px;
+  height: 384px;
+  background: #e3e2e2;
+  border-radius: 50%;
+  mix-blend-mode: multiply;
+  filter: blur(80px);
+  opacity: 0.3;
+  pointer-events: none;
+}
+
+// Icon
+.iconWrapper {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: #efeded;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 40px;
+  border: 1px solid rgba(196, 199, 199, 0.5);
+
+  span {
+    font-size: 32px;
+    color: #1b1c1c;
+    font-variation-settings: 'FILL' 0, 'wght' 200;
+  }
+}
+
+// Typography
+.title {
+  font-family: 'Noto Serif', serif;
+  font-size: 48px;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  font-weight: 400;
+  color: #1b1c1c;
+  margin-bottom: 24px;
+
+  @media (max-width: 768px) {
+    font-size: 36px;
+  }
+}
+
+.subtitle {
+  font-family: 'Manrope', sans-serif;
+  font-size: 18px;
+  line-height: 1.6;
+  color: #444748;
+  max-width: 448px;
+  margin: 0 auto 32px;
+
+  @media (max-width: 768px) {
+    font-size: 16px;
+  }
+}
+
+.emailHighlight {
+  font-weight: 600;
+  color: #1b1c1c;
+  letter-spacing: 0.5px;
+}
+
+// Instructions
+.instructions {
+  width: 100%;
+  max-width: 384px;
+  margin: 0 auto 48px;
+}
+
+.stepsList {
+  text-align: left;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.stepItem {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  font-family: 'Manrope', sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  color: #444748;
+  padding: 12px 0;
+
+  &:not(:last-child) {
+    border-bottom: 1px solid rgba(196, 199, 199, 0.3);
+  }
+}
+
+.stepNumber {
+  color: #747878;
+  font-family: 'Manrope', sans-serif;
+  font-size: 12px;
+  line-height: 1;
+  letter-spacing: 0.1em;
+  font-weight: 700;
+  text-transform: uppercase;
+  min-width: 32px;
+}
+
+// Actions
+.actions {
+  width: 100%;
+  max-width: 384px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.resendBtn {
+  width: 100%;
+  background: #000000;
+  color: white;
+  font-family: 'Manrope', sans-serif;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-weight: 700;
+  padding: 16px;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+  transition: background 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  position: relative;
+
+  &:hover:not(:disabled) {
+    background: #5f5e5e;
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}
+
+.arrowIcon {
+  opacity: 0;
+  transition: all 0.3s;
+  transform: translateX(-10px);
+
+  &.visible {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  span {
+    font-size: 18px;
+    font-variation-settings: 'wght' 300;
+  }
+}
+
+.successMessage {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px;
+  background: rgba(34, 197, 94, 0.1);
+  border-radius: 4px;
+  color: #22c55e;
+  font-family: 'Manrope', sans-serif;
+  font-size: 14px;
+  animation: slideIn 0.3s ease;
+
+  span:first-child {
+    font-size: 20px;
+  }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.secondaryActions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.changeEmailBtn {
+  font-family: 'Manrope', sans-serif;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: #444748;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  transition: color 0.3s;
+
+  &:hover {
+    color: #000000;
+  }
+}
+
+.continueBtn {
+  font-family: 'Manrope', sans-serif;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: #747878;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  transition: color 0.3s;
+
+  &:hover:not(:disabled) {
+    color: #000000;
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}
+
+// Security Note
+.securityNote {
+  margin-top: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: #747878;
+
+  span:first-child {
+    font-size: 14px;
+    font-variation-settings: 'FILL' 1;
+  }
+
+  span:last-child {
+    font-family: 'Manrope', sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    color: #747878;
+    font-size: 14px;
+  }
+}
+
+// Footer
+.footer {
+  width: 100%;
+  background: #fafafa;
+  border-top: 1px solid #e5e5e5;
+  padding: 80px 48px;
+  margin-top: auto;
+
+  @media (max-width: 768px) {
+    padding: 48px 24px;
+  }
+}
+
+.footerGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  max-width: 1440px;
+  margin: 0 auto;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+}
+
+.footerBrand {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.footerLogo {
+  font-family: 'Noto Serif', serif;
+  font-weight: 700;
+  font-size: 18px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #1a1a1a;
+}
+
+.companyInfo {
+  font-family: 'Manrope', sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  color: #737373;
+  font-size: 14px;
+  
+  p {
+    margin-bottom: 4px;
+  }
+}
+
+.contact {
+  margin-top: 8px;
+  padding-top: 8px;
+}
+
+.footerLinks {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 32px;
+
+  @media (max-width: 768px) {
+    align-items: flex-start;
+  }
+}
+
+.linksList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+
+  li a {
+    font-family: 'Noto Serif', serif;
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #737373;
+    text-decoration: none;
+    transition: color 0.3s;
+
+    &:hover {
+      color: #1a1a1a;
+    }
+  }
+}
+
+.securityBadges {
+  display: flex;
+  gap: 24px;
+  font-family: 'Manrope', sans-serif;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  font-weight: 700;
+  color: #a3a3a3;
+  text-transform: uppercase;
+
+  span {
+    font-size: 10px;
+  }
+
+  @media (max-width: 768px) {
+    gap: 16px;
+  }
+}
+
+.copyright {
+  font-family: 'Noto Serif', serif;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #737373;
+  text-align: right;
+
+  @media (max-width: 768px) {
+    text-align: left;
+  }
+}

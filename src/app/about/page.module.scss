@@ -1,0 +1,540 @@
+// Main Content (без локального .container, .header, .footer)
+.main {
+  flex-grow: 1;
+  padding-top: 96px;
+
+  @media (max-width: 768px) {
+    padding-top: 80px;
+  }
+}
+
+// Hero Section
+.hero {
+  position: relative;
+  min-height: 716px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  margin-bottom: 80px;
+  padding: 0 48px;
+
+  @media (max-width: 768px) {
+    padding: 0 24px;
+    min-height: 500px;
+    margin-bottom: 60px;
+  }
+}
+
+.heroBg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.heroImage {
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+}
+
+.heroOverlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(251, 249, 249, 0.6);
+  backdrop-filter: blur(2px);
+}
+
+.heroContent {
+  position: relative;
+  z-index: 10;
+  text-align: center;
+  max-width: 896px;
+  margin: 0 auto;
+}
+
+.heroTitle {
+  font-family: 'Noto Serif', serif;
+  font-size: 48px;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  font-weight: 400;
+  color: #1b1c1c;
+  margin-bottom: 24px;
+
+  @media (max-width: 768px) {
+    font-size: 36px;
+  }
+}
+
+.heroSubtitle {
+  font-family: 'Noto Serif', serif;
+  font-size: 24px;
+  line-height: 1.3;
+  font-weight: 400;
+  color: #444748;
+  max-width: 672px;
+  margin: 0 auto;
+  font-weight: 300;
+
+  @media (max-width: 768px) {
+    font-size: 20px;
+  }
+}
+
+// Intro Section
+.introSection {
+  max-width: 1440px;
+  margin: 0 auto 80px;
+  padding: 0 48px;
+
+  @media (max-width: 768px) {
+    padding: 0 24px;
+    margin-bottom: 60px;
+  }
+}
+
+.introContent {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.introText {
+  font-family: 'Noto Serif', serif;
+  font-size: 28px;
+  line-height: 1.4;
+  letter-spacing: -0.01em;
+  font-weight: 400;
+  text-align: center;
+  color: #1b1c1c;
+  max-width: 896px;
+  margin: 0 auto;
+
+  @media (max-width: 768px) {
+    font-size: 20px;
+    line-height: 1.4;
+    padding: 0 16px;
+  }
+}
+
+// Mission Section
+.missionSection {
+  max-width: 1440px;
+  margin: 0 auto 80px;
+  padding: 0 48px;
+
+  @media (max-width: 768px) {
+    padding: 0 24px;
+    margin-bottom: 60px;
+  }
+}
+
+.missionGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 80px;
+
+  @media (min-width: 768px) {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.premiumCard {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(240, 240, 240, 0.1) 100%);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.02);
+  border-top: 1px solid rgba(255, 255, 255, 0.8);
+  border-left: 1px solid rgba(255, 255, 255, 0.8);
+  border-radius: 8px;
+  padding: 48px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  @media (max-width: 768px) {
+    padding: 32px;
+  }
+}
+
+.cardLabel {
+  font-family: 'Manrope', sans-serif;
+  font-size: 12px;
+  line-height: 1;
+  letter-spacing: 0.1em;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #444748;
+  margin-bottom: 16px;
+}
+
+.cardTitle {
+  font-family: 'Noto Serif', serif;
+  font-size: 24px;
+  line-height: 1.3;
+  font-weight: 500;
+  color: #1b1c1c;
+  margin-bottom: 24px;
+}
+
+.cardText {
+  font-family: 'Manrope', sans-serif;
+  font-size: 18px;
+  line-height: 1.6;
+  color: #444748;
+}
+
+// Advantages Section
+.advantagesSection {
+  background: #efeded;
+  border-radius: 12px;
+  margin: 0 48px 80px;
+  padding: 80px 48px;
+
+  @media (max-width: 768px) {
+    margin: 0 24px 60px;
+    padding: 48px 24px;
+  }
+}
+
+.advantagesContainer {
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
+.advantagesHeader {
+  text-align: center;
+  margin-bottom: 64px;
+}
+
+.advantagesTitle {
+  font-family: 'Noto Serif', serif;
+  font-size: 32px;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  font-weight: 400;
+  color: #1b1c1c;
+}
+
+.advantagesGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+
+  @media (max-width: 1024px) {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 32px;
+  }
+
+  @media (max-width: 640px) {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+}
+
+.advantageItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 24px;
+
+  span:first-child {
+    font-size: 40px;
+    margin-bottom: 24px;
+    color: #1b1c1c;
+    font-variation-settings: 'wght' 200;
+  }
+
+  h3 {
+    font-family: 'Manrope', sans-serif;
+    font-size: 12px;
+    line-height: 1;
+    letter-spacing: 0.1em;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #1b1c1c;
+    margin-bottom: 12px;
+  }
+
+  p {
+    font-family: 'Manrope', sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    color: #444748;
+  }
+}
+
+// Lifestyle Section
+.lifestyleSection {
+  position: relative;
+  width: 100%;
+  height: 614px;
+  margin-bottom: 80px;
+  overflow: hidden;
+
+  @media (max-width: 768px) {
+    height: 400px;
+    margin-bottom: 60px;
+  }
+}
+
+.lifestyleBg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+}
+
+.lifestyleOverlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.lifestyleContent {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.lifestyleQuote {
+  font-family: 'Noto Serif', serif;
+  font-size: 48px;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  font-weight: 400;
+  color: white;
+  text-align: center;
+  font-style: italic;
+  font-weight: 300;
+  padding: 0 16px;
+
+  @media (max-width: 768px) {
+    font-size: 32px;
+  }
+}
+
+// Trust Section
+.trustSection {
+  max-width: 1440px;
+  margin: 0 auto 80px;
+  padding: 0 48px;
+
+  @media (max-width: 768px) {
+    padding: 0 24px;
+    margin-bottom: 60px;
+  }
+}
+
+.trustGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 80px;
+
+  @media (min-width: 768px) {
+    grid-template-columns: 7fr 5fr;
+  }
+}
+
+.trustContent {
+  max-width: 576px;
+}
+
+.sectionLabel {
+  font-family: 'Manrope', sans-serif;
+  font-size: 12px;
+  line-height: 1;
+  letter-spacing: 0.1em;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #444748;
+  display: block;
+  margin-bottom: 16px;
+}
+
+.sectionTitle {
+  font-family: 'Noto Serif', serif;
+  font-size: 32px;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  font-weight: 400;
+  color: #1b1c1c;
+  margin-bottom: 24px;
+}
+
+.trustText {
+  font-family: 'Manrope', sans-serif;
+  font-size: 18px;
+  line-height: 1.6;
+  color: #444748;
+  margin-bottom: 48px;
+  max-width: 576px;
+}
+
+.securityBadges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 32px;
+  align-items: center;
+  opacity: 0.6;
+  transition: all 0.5s;
+
+  &:hover {
+    opacity: 1;
+    filter: grayscale(0);
+  }
+}
+
+.pciBadge {
+  font-family: 'Manrope', sans-serif;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  font-weight: 700;
+  text-transform: uppercase;
+  border: 1px solid #747878;
+  padding: 8px 16px;
+}
+
+.visaBadge, .mastercardBadge {
+  font-family: 'Noto Serif', serif;
+  font-size: 24px;
+  line-height: 1.3;
+  font-weight: 500;
+  font-style: italic;
+  font-weight: 700;
+}
+
+.glassPanel {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(16px);
+  border-top: 1px solid rgba(255, 255, 255, 0.9);
+  border-left: 1px solid rgba(255, 255, 255, 0.9);
+  border-radius: 8px;
+  padding: 40px;
+  height: 100%;
+
+  @media (max-width: 768px) {
+    padding: 32px 24px;
+  }
+}
+
+.detailsTitle {
+  font-family: 'Noto Serif', serif;
+  font-size: 24px;
+  line-height: 1.3;
+  font-weight: 500;
+  color: #1b1c1c;
+  margin-bottom: 32px;
+}
+
+.detailsList {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.detailItem {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.detailLabel {
+  font-family: 'Manrope', sans-serif;
+  font-size: 12px;
+  line-height: 1;
+  letter-spacing: 0.1em;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #444748;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.detailValue {
+  font-family: 'Manrope', sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  color: #1b1c1c;
+}
+
+.detailSubtext {
+  font-family: 'Manrope', sans-serif;
+  font-size: 14px;
+  color: #444748;
+}
+
+// CTA Section
+.ctaSection {
+  max-width: 1440px;
+  margin: 0 auto 80px;
+  padding: 96px 48px;
+  text-align: center;
+
+  @media (max-width: 768px) {
+    padding: 60px 24px;
+    margin-bottom: 60px;
+  }
+}
+
+.ctaTitle {
+  font-family: 'Noto Serif', serif;
+  font-size: 32px;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  font-weight: 400;
+  color: #1b1c1c;
+  margin-bottom: 32px;
+}
+
+.ctaBtn {
+  background: #000000;
+  color: white;
+  padding: 20px 40px;
+  font-family: 'Manrope', sans-serif;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-weight: 700;
+  border: none;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: background 0.3s;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s;
+  }
+
+  &:hover::before {
+    left: 100%;
+  }
+
+  &:hover {
+    background: #5f5e5e;
+  }
+}
+
+// Reveal Animations
+.revealUp {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}

@@ -1,0 +1,190 @@
+'use client'
+import Link from 'next/link'
+import { usePathname } from 'next/navigation'
+import styles from './Footer.module.scss'
+
+export default function Footer() {
+  const pathname = usePathname()
+  const currentYear = new Date().getFullYear()
+
+  // Company information
+  const companyInfo = {
+    name: 'AURA FINANCE LTD',
+    registration: '12345678',
+    vat: 'GB123456789',
+    address: '25 Berkeley Square, Mayfair, London, W1J 6HN, United Kingdom',
+    email: 'contact@aura.finance',
+    phone: '+44 (0) 20 7123 4567',
+  }
+
+  // Main navigation links
+  const mainLinks = [
+    { href: '/how-it-works', label: 'How It Works' },
+    { href: '/pricing', label: 'Pricing & Fees' },
+    { href: '/supported-countries', label: 'Availability & Security' },
+    { href: '/faq', label: 'FAQ' },
+    { href: '/about', label: 'About Us' },
+    { href: '/contact', label: 'Contact' },
+  ]
+
+  // Legal links
+  const legalLinks = [
+    { href: '/terms', label: 'Terms of Service' },
+    { href: '/privacy', label: 'Privacy Policy' },
+    { href: '/cookie-policy', label: 'Cookie Policy' },
+    { href: '/regulatory', label: 'Regulatory Disclosure' },
+    { href: '/compliance', label: 'Compliance' },
+  ]
+
+  // Product links
+  const productLinks = [
+    { href: '/wallet', label: 'Digital Wallet' },
+    { href: '/virtual-card', label: 'Virtual Cards' },
+    { href: '/buy-balance', label: 'Add Funds' },
+    { href: '/security', label: 'Security' },
+    { href: '/methodology', label: 'Methodology' },
+  ]
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
+
+  return (
+    <footer className={styles.footer}>
+      <div className={styles.container}>
+        {/* Main Footer Grid */}
+        <div className={styles.grid}>
+          {/* Brand Column */}
+          <div className={styles.brandColumn}>
+            <div className={styles.logo}>AURA</div>
+            <p className={styles.tagline}>
+              Global luxury financial ecosystem for discerning individuals.
+            </p>
+            <div className={styles.socialLinks}>
+              <a href="#" className={styles.socialLink} aria-label="LinkedIn">
+                <span className="material-symbols-outlined">work</span>
+              </a>
+              <a href="#" className={styles.socialLink} aria-label="Instagram">
+                <span className="material-symbols-outlined">photo_camera</span>
+              </a>
+              <a href="#" className={styles.socialLink} aria-label="Twitter">
+                <span className="material-symbols-outlined">alternate_email</span>
+              </a>
+            </div>
+          </div>
+
+          {/* Product Links Column */}
+          <div className={styles.linksColumn}>
+            <h3 className={styles.columnTitle}>Products</h3>
+            <ul className={styles.linksList}>
+              {productLinks.map((link) => (
+                <li key={link.href}>
+                  <Link href={link.href} className={styles.link}>
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Main Links Column */}
+          <div className={styles.linksColumn}>
+            <h3 className={styles.columnTitle}>Resources</h3>
+            <ul className={styles.linksList}>
+              {mainLinks.map((link) => (
+                <li key={link.href}>
+                  <Link href={link.href} className={styles.link}>
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Legal Links Column */}
+          <div className={styles.linksColumn}>
+            <h3 className={styles.columnTitle}>Legal</h3>
+            <ul className={styles.linksList}>
+              {legalLinks.map((link) => (
+                <li key={link.href}>
+                  <Link href={link.href} className={styles.link}>
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+
+        {/* Company Information Section */}
+        <div className={styles.companySection}>
+          <div className={styles.companyInfo}>
+            <div className={styles.infoRow}>
+              <span className={styles.infoLabel}>Company:</span>
+              <span className={styles.infoValue}>{companyInfo.name}</span>
+            </div>
+            <div className={styles.infoRow}>
+              <span className={styles.infoLabel}>Registration:</span>
+              <span className={styles.infoValue}>{companyInfo.registration}</span>
+            </div>
+            <div className={styles.infoRow}>
+              <span className={styles.infoLabel}>VAT:</span>
+              <span className={styles.infoValue}>{companyInfo.vat}</span>
+            </div>
+            <div className={styles.infoRow}>
+              <span className={styles.infoLabel}>Address:</span>
+              <span className={styles.infoValue}>{companyInfo.address}</span>
+            </div>
+            <div className={styles.infoRow}>
+              <span className={styles.infoLabel}>Email:</span>
+              <a href={`mailto:${companyInfo.email}`} className={styles.infoLink}>
+                {companyInfo.email}
+              </a>
+            </div>
+            <div className={styles.infoRow}>
+              <span className={styles.infoLabel}>Phone:</span>
+              <a href={`tel:${companyInfo.phone}`} className={styles.infoLink}>
+                {companyInfo.phone}
+              </a>
+            </div>
+          </div>
+        </div>
+
+        {/* Payment Logos & Certifications */}
+        <div className={styles.paymentSection}>
+          <div className={styles.paymentLogos}>
+            <div className={styles.paymentItem}>
+              <span className={styles.visaLogo}>VISA</span>
+            </div>
+            <div className={styles.paymentItem}>
+              <span className={styles.mastercardLogo}>Mastercard</span>
+            </div>
+            <div className={styles.paymentItem}>
+              <span className={styles.pciBadge}>PCI DSS</span>
+            </div>
+          </div>
+          <div className={styles.certBadges}>
+            <span className={styles.badge}>Level 1 Certified</span>
+            <span className={styles.badge}>ISO 27001</span>
+            <span className={styles.badge}>GDPR Compliant</span>
+          </div>
+        </div>
+
+        {/* Bottom Bar */}
+        <div className={styles.bottomBar}>
+          <div className={styles.copyright}>
+            © {currentYear} {companyInfo.name}. All rights reserved.
+          </div>
+          <div className={styles.bottomLinks}>
+            <Link href="/sitemap" className={styles.bottomLink}>Sitemap</Link>
+            <Link href="/accessibility" className={styles.bottomLink}>Accessibility</Link>
+            <button onClick={scrollToTop} className={styles.backToTop}>
+              <span className="material-symbols-outlined">arrow_upward</span>
+              Back to Top
+            </button>
+          </div>
+        </div>
+      </div>
+    </footer>
+  )
+}
