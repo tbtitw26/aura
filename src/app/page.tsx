@@ -38,7 +38,7 @@ export default function Home() {
   const handleApplyMembership = () => router.push('/register')
   const handleHowItWorks = () => router.push('/how-it-works')
   const handleExploreConcierge = () => router.push('/contact')
-  const handleOpenDashboard = () => router.push('/wallet')
+  const handleViewWallet = () => router.push('/wallet')
   const handleAddFunds = () => router.push('/buy-balance')
   const handleRequestAccess = () => router.push('/register')
 
@@ -141,15 +141,15 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Features Bento Grid */}
-      <section className={styles.bentoGrid}>
-        <div className={styles.bentoContainer}>
-          <div className={styles.bentoGridInner}>
+      {/* Features Simple Grid */}
+      <section className={styles.featuresGrid}>
+        <div className={styles.featuresContainer}>
+          <div className={styles.featuresGridInner}>
             <div className={styles.walletCard}>
               <div>
                 <span className={styles.cardLabel}>Centralized Control</span>
                 <h3 className={styles.cardTitle}>The Unified Wallet</h3>
-                <p className={styles.cardText}>Monitor all your cards, transactions, and balances in a single high-fidelity interface designed for clarity.</p>
+                <p className={styles.cardText}>Monitor all your cards and transactions in a single high-fidelity interface designed for clarity.</p>
               </div>
               <div className={styles.walletCardFooter}>
                 <div className={styles.avatars}>
@@ -157,7 +157,7 @@ export default function Home() {
                   <div className={styles.avatar}></div>
                   <div className={styles.avatar}></div>
                 </div>
-                <button onClick={handleOpenDashboard} className={styles.dashboardBtn}>Open Dashboard</button>
+                <button onClick={handleViewWallet} className={styles.viewWalletBtn}>View Wallet</button>
               </div>
             </div>
 
@@ -169,7 +169,7 @@ export default function Home() {
 
             <div className={styles.spendingCard}>
               <h3>Spending Limits</h3>
-              <p>Set granular daily or monthly limits for each sub-card in your vault.</p>
+              <p>Set granular daily or monthly limits for each virtual card in your vault.</p>
               <div className={styles.progressBar}>
                 <div className={styles.progressFill}></div>
               </div>
@@ -200,7 +200,7 @@ export default function Home() {
                   <div className={styles.balanceIcon}>€</div>
                   <div>
                     <div className={styles.balanceTitle}>Euro Account</div>
-                    <div className={styles.balanceSubtitle}>Main Currency</div>
+                    <div className={styles.balanceSubtitle}>Primary Currency</div>
                   </div>
                   <div className={styles.balanceAmount}>€12,450.00</div>
                 </div>
@@ -208,7 +208,7 @@ export default function Home() {
                   <div className={styles.balanceIcon}>$</div>
                   <div>
                     <div className={styles.balanceTitle}>US Dollar</div>
-                    <div className={styles.balanceSubtitle}>Vault B</div>
+                    <div className={styles.balanceSubtitle}>Secondary Vault</div>
                   </div>
                   <div className={styles.balanceAmount}>$8,200.00</div>
                 </div>
