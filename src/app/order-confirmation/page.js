@@ -1,10 +1,10 @@
 'use client'
-import { useState, useEffect } from 'react'
+import { Suspense, useState, useEffect } from 'react'
 import { useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import styles from './page.module.scss'
 
-export default function OrderConfirmation() {
+function OrderConfirmationContent() {
   const searchParams = useSearchParams()
   const [transactionData, setTransactionData] = useState({
     transactionId: 'TXN-8472-AURA',
@@ -212,5 +212,13 @@ export default function OrderConfirmation() {
         </div>
       </main>
     </div>
+  )
+}
+
+export default function OrderConfirmation() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <OrderConfirmationContent />
+    </Suspense>
   )
 }
