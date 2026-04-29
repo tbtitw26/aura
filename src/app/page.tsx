@@ -1,13 +1,83 @@
 'use client'
-import { useState } from 'react'
-import Link from 'next/link'
+
+import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import VirtualCard from '@/components/ui/VirtualCard'
 import styles from './page.module.scss'
 
+// Компонент SpendingLimitsCard винесено на правильний рівень
+function SpendingLimitsCard() {
+  const [progress, setProgress] = useState(5);
+
+  useEffect(() => {
+    let ticking = false;
+    
+    function calculateProgress() {
+      // Отримуємо позицію картки відносно в'юпорту
+      const card = document.querySelector(`.${styles.spendingCard}`);
+      if (!card) return 5;
+      
+      const rect = card.getBoundingClientRect();
+      const windowHeight = window.innerHeight;
+      
+      // Розраховуємо, наскільки картка видима
+      // Коли картка тільки з'являється (зверху) - 0%
+      // Коли картка в центрі - 50%
+      // Коли картка зникає (знизу) - 95%
+      let visibleProgress = 0;
+      
+      if (rect.top < windowHeight && rect.bottom > 0) {
+        const cardCenter = rect.top + rect.height / 2;
+        const windowCenter = windowHeight / 2;
+        
+        // Від -windowCenter до windowCenter мапуємо на 0-100%
+        let relativePos = (cardCenter - windowCenter) / windowHeight;
+        relativePos = Math.max(-1, Math.min(1, relativePos));
+        
+        // Прогрес збільшується, коли картка рухається зверху вниз
+        visibleProgress = (1 - relativePos) / 2 * 95;
+      }
+      
+      return Math.max(5, Math.min(95, visibleProgress));
+    }
+    
+    function handleScroll() {
+      if (ticking) return;
+      ticking = true;
+      
+      requestAnimationFrame(() => {
+        const newProgress = calculateProgress();
+        setProgress(newProgress);
+        ticking = false;
+      });
+    }
+    
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll(); // Встановлюємо початкове значення
+    
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  return (
+    <div className={styles.spendingCard}>
+      <h3>Spending Limits</h3>
+      <p>Set granular daily or monthly limits for each sub-card in your vault.</p>
+      <div className={styles.progressBar}>
+        <div
+          className={styles.progressFill}
+          style={{ 
+            width: `${progress}%`,
+            transition: 'width 0.1s linear'
+          }}
+        ></div>
+      </div>
+    </div>
+  );
+}
+
 export default function Home() {
   const router = useRouter()
-  const [openFaq, setOpenFaq] = useState(0)
+  const [openFaq, setOpenFaq] = useState<number>(-1) // Змінено на -1, щоб жоден FAQ не був відкритий за замовчуванням
 
   const steps = [
     { number: '01', title: 'Register', desc: 'Complete our high-speed KYC in under 2 minutes.' },
@@ -226,13 +296,8 @@ export default function Home() {
               <p>Create a temporary card number for one-time drops or high-value limited editions.</p>
             </div>
 
-            <div className={styles.spendingCard}>
-              <h3>Spending Limits</h3>
-              <p>Set granular daily or monthly limits for each sub-card in your vault.</p>
-              <div className={styles.progressBar}>
-                <div className={styles.progressFill}></div>
-              </div>
-            </div>
+            {/* Правильне використання компонента SpendingLimitsCard */}
+            <SpendingLimitsCard />
 
             <div className={styles.topupsCard}>
               <div>
