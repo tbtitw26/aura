@@ -182,11 +182,11 @@ function LoginForm() {
 
       <div className={styles.imageContainer}>
         <div className={styles.imageGradient}></div>
-        <img 
-          src="https://lh3.googleusercontent.com/aida-public/AB6AXuDhFX9s2mXKl2XfOMju95RdCv3sav4LE14UmpRyp-yCO8_DWuhdjMU_xbyNYrvw5RSQAyeLpAtEuhmHxH5Mdmqqnl_U6Y_YqMlPRhnY4u0xb8pZesKIU3mbsfuXn9Nikpt0Bq2a46Yumqir3ULNmyhrISaI2xFgOyp4ZCbc4k9xUH_8laPGndAw0RxmgP5IdB-U10t8HL7--knGrZzYroURtbbbo1kqeniXocG9zZbmb7n9vvf7EGhu3ucxZOAvmGlVmihXnEoz5bA"
-          alt="High-end fashion accessory"
-          className={styles.heroImage}
-        />
+         <img 
+    src="/01.jpg"
+    alt="High-end fashion accessory"
+    className={styles.heroImage}
+  />
       </div>
     </div>
   )

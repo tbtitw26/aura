@@ -35,6 +35,21 @@ export default function Home() {
     }
   ]
 
+  const statistics = [
+    { label: 'Transactions daily', value: '14.2k+' },
+    { label: 'Boutiques globally', value: '500k+' },
+    { label: 'Privacy rate', value: '100%' },
+    { label: 'Support response', value: '< 60s' }
+  ]
+
+  const comparisons = [
+    { feature: 'Global Merchant Acceptance', aura: true, traditional: false },
+    { feature: 'Instant Virtual Generation', aura: true, traditional: false },
+    { feature: 'Private Billing Address', aura: true, traditional: false },
+    { feature: 'Institutional FX Rates', aura: true, traditional: 'Varies' },
+    { feature: 'Merchant-Locked Security', aura: true, traditional: false },
+  ]
+
   const handleApplyMembership = () => router.push('/register')
   const handleHowItWorks = () => router.push('/how-it-works')
   const handleExploreConcierge = () => router.push('/contact')
@@ -107,6 +122,50 @@ export default function Home() {
               <h3>Multi-currency</h3>
               <p>Store and spend in USD, EUR, GBP, and JPY with institutional-grade exchange rates.</p>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Stats Counter */}
+      <section className={styles.stats}>
+        <div className={styles.container}>
+          <div className={styles.statsGrid}>
+            {statistics.map((stat, i) => (
+              <div key={i} className={styles.statItem}>
+                <span className={styles.statValue}>{stat.value}</span>
+                <span className={styles.statLabel}>{stat.label}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Comparison Section */}
+      <section className={styles.comparison}>
+        <div className={styles.container}>
+          <div className={styles.sectionHeader}>
+            <h2>Redefining Standard</h2>
+            <p>Why modern collectors choose Aura over traditional banking.</p>
+          </div>
+          <div className={styles.tableWrapper}>
+            <table className={styles.compTable}>
+              <thead>
+                <tr>
+                  <th>Capability</th>
+                  <th>Aura Premium</th>
+                  <th>Standard Bank</th>
+                </tr>
+              </thead>
+              <tbody>
+                {comparisons.map((row, i) => (
+                  <tr key={i}>
+                    <td>{row.feature}</td>
+                    <td>{row.aura ? <span className="material-symbols-outlined">check</span> : '—'}</td>
+                    <td>{row.traditional === true ? <span className="material-symbols-outlined">check</span> : row.traditional === false ? '—' : row.traditional}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
         </div>
       </section>

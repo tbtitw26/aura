@@ -244,6 +244,85 @@
   }
 }
 
+// ========== STATS COUNTER ==========
+.stats {
+  padding: 40px 0;
+  background: white;
+}
+
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  text-align: center;
+
+  @media (max-width: 768px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.statItem {
+  display: flex;
+  flex-direction: column;
+}
+
+.statValue {
+  font-family: 'Noto Serif', serif;
+  font-size: 32px;
+  color: #1a1a1a;
+}
+
+.statLabel {
+  font-family: 'Manrope', sans-serif;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: #a3a3a3;
+  margin-top: 4px;
+}
+
+// ========== COMPARISON TABLE ==========
+.comparison {
+  padding: 80px 0;
+  background: white;
+}
+
+.tableWrapper {
+  margin-top: 48px;
+  overflow-x: auto;
+}
+
+.compTable {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: 'Manrope', sans-serif;
+
+  th {
+    text-align: left;
+    padding: 24px;
+    font-family: 'Noto Serif', serif;
+    font-size: 18px;
+    font-weight: 500;
+    border-bottom: 2px solid #000;
+  }
+
+  td {
+    padding: 20px 24px;
+    border-bottom: 1px solid #f0f0f0;
+    font-size: 14px;
+    color: #444748;
+
+    &:nth-child(2) {
+      font-weight: 700;
+      color: #000;
+    }
+
+    span {
+      font-size: 18px;
+    }
+  }
+}
+
 // ========== HOW IT WORKS ==========
 .howItWorks {
   padding: 60px 0;
@@ -372,7 +451,7 @@
 .parallaxBg {
   position: absolute;
   inset: 0;
-  background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCPu5ykNbIkE5WK4cZSxyYyyuimeHLRx19HidakbSag5z6uvSEoeB_ggEX4Bt6s20eNnzjmYcvolNtXXNfH3lgoaoxGvqQErVZTzWfv3oydZZ_c3MWDrnLHJrv3YFNOu1F6FmzJSvqhIKvyJ6lwlyUP4rCfYQvrCewDRIQYFCfrfYYiYttDtdzg2IfwJbRYhJbfozweICrPwyDvTYM8F-Z86hLV-MNM3FtPqVk0E-opWNXTyCE1xlZe4oCakWuRJVnjWkXfwwygfjo');
+  background-image: url('/photo1.png'); // Просто /photo1.png без /public
   background-attachment: fixed;
   background-position: center;
   background-repeat: no-repeat;
@@ -1045,3 +1124,4 @@
     background: #1a1a1a;
   }
 }
+
