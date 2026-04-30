@@ -1,6 +1,7 @@
 'use client'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
+import Image from 'next/image'
 import styles from './Footer.module.scss'
 
 export default function Footer() {
@@ -150,23 +151,44 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Payment Logos & Certifications */}
+        {/* Payment Logos & Certifications - ЗМІНЕНО ПОРЯДОК */}
         <div className={styles.paymentSection}>
-          <div className={styles.paymentLogos}>
-            <div className={styles.paymentItem}>
-              <span className={styles.visaLogo}>VISA</span>
-            </div>
-            <div className={styles.paymentItem}>
-              <span className={styles.mastercardLogo}>Mastercard</span>
-            </div>
-            <div className={styles.paymentItem}>
-              <span className={styles.pciBadge}>PCI DSS</span>
-            </div>
-          </div>
+          {/* Сертифікати тепер зліва */}
           <div className={styles.certBadges}>
             <span className={styles.badge}>Level 1 Certified</span>
             <span className={styles.badge}>ISO 27001</span>
             <span className={styles.badge}>GDPR Compliant</span>
+          </div>
+
+          {/* Платіжні логотипи тепер справа */}
+          <div className={styles.paymentLogos}>
+            <div className={styles.paymentItem}>
+              <div className={styles.pciLogo}>
+                <Image 
+                  src="/pci-dss-compliant-logo-vector.svg" 
+                  alt="PCI DSS Compliant"
+                  width={40}
+                  height={40}
+                  className={styles.pciImage}
+                />
+              </div>
+            </div>
+            <div className={styles.paymentItem}>
+              <div className={styles.visaLogoText}>
+                <span>VISA</span>
+              </div>
+            </div>
+            <div className={styles.paymentItem}>
+              <div className={styles.mastercardLogo}>
+                <Image 
+                  src="/ma_symbol.svg" 
+                  alt="Mastercard"
+                  width={50}
+                  height={35}
+                  className={styles.mastercardImage}
+                />
+              </div>
+            </div>
           </div>
         </div>
 

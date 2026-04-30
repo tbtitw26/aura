@@ -190,48 +190,15 @@
   }
 }
 
-.paymentLogos {
-  display: flex;
-  align-items: center;
-  gap: 2rem;
-}
-
-.paymentItem {
-  display: flex;
-  align-items: center;
-}
-
-.visaLogo {
-  font-family: 'Noto Serif', serif;
-  font-size: 1.5rem;
-  font-weight: 700;
-  font-style: italic;
-  color: #1a1a1a;
-  letter-spacing: -0.5px;
-}
-
-.mastercardLogo {
-  font-family: 'Noto Serif', serif;
-  font-size: 1.25rem;
-  font-weight: 700;
-  color: #1a1a1a;
-  letter-spacing: -0.5px;
-}
-
-.pciBadge {
-  font-family: 'Manrope', sans-serif;
-  font-size: 0.7rem;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  padding: 0.25rem 0.5rem;
-  border: 1px solid #999999;
-  border-radius: 2px;
-  color: #666666;
-}
-
+// Certificates (ліва сторона)
 .certBadges {
   display: flex;
   gap: 1rem;
+  order: 1;
+
+  @media (max-width: 640px) {
+    order: 1;
+  }
 }
 
 .badge {
@@ -242,6 +209,80 @@
   background: #f0f0f0;
   padding: 0.25rem 0.75rem;
   border-radius: 2px;
+  transition: all 0.2s;
+
+  &:hover {
+    background: #e0e0e0;
+    color: #666666;
+  }
+}
+
+// Payment Logos (права сторона)
+.paymentLogos {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  order: 2;
+
+  @media (max-width: 640px) {
+    order: 2;
+  }
+}
+
+.paymentItem {
+  display: flex;
+  align-items: center;
+}
+
+// PCI DSS Logo
+.pciLogo {
+  display: flex;
+  align-items: center;
+  line-height: 0;
+}
+
+.pciImage {
+  width: auto;
+  height: 40px;
+  object-fit: contain;
+  transition: transform 0.2s;
+
+  &:hover {
+    transform: scale(1.05);
+  }
+}
+
+// VISA Logo Text
+.visaLogoText {
+  font-family: 'Noto Serif', serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  font-style: italic;
+  color: #1a1a1a;
+  letter-spacing: -0.5px;
+  transition: opacity 0.2s;
+
+  &:hover {
+    opacity: 0.8;
+  }
+}
+
+// Mastercard Logo
+.mastercardLogo {
+  display: flex;
+  align-items: center;
+  line-height: 0;
+}
+
+.mastercardImage {
+  width: auto;
+  height: 35px;
+  object-fit: contain;
+  transition: transform 0.2s;
+
+  &:hover {
+    transform: scale(1.05);
+  }
 }
 
 // Bottom Bar
@@ -303,5 +344,114 @@
 
   span {
     font-size: 1rem;
+  }
+}
+
+// Responsive adjustments for smaller screens
+@media (max-width: 480px) {
+  .paymentLogos {
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .certBadges {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .bottomLinks {
+    justify-content: center;
+    gap: 1rem;
+  }
+
+  .infoRow {
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .infoLabel {
+    min-width: auto;
+  }
+}
+
+// Dark mode support (опціонально)
+@media (prefers-color-scheme: dark) {
+  .footer {
+    background: #1a1a1a;
+    border-top-color: #333333;
+  }
+
+  .logo {
+    color: #ffffff;
+  }
+
+  .tagline,
+  .infoValue,
+  .infoLink {
+    color: #999999;
+  }
+
+  .infoLabel,
+  .columnTitle {
+    color: #ffffff;
+  }
+
+  .link {
+    color: #999999;
+
+    &:hover {
+      color: #ffffff;
+    }
+  }
+
+  .socialLink {
+    background: #333333;
+    color: #ffffff;
+
+    &:hover {
+      background: #ffffff;
+      color: #1a1a1a;
+    }
+  }
+
+  .badge {
+    background: #333333;
+    color: #999999;
+
+    &:hover {
+      background: #444444;
+      color: #cccccc;
+    }
+  }
+
+  .visaLogoText {
+    color: #ffffff;
+  }
+
+  .copyright,
+  .bottomLink {
+    color: #999999;
+
+    &:hover {
+      color: #ffffff;
+    }
+  }
+
+  .backToTop {
+    color: #999999;
+
+    &:hover {
+      color: #ffffff;
+    }
+  }
+
+  .companySection {
+    border-top-color: #333333;
+    border-bottom-color: #333333;
+  }
+
+  .bottomBar {
+    border-top-color: #333333;
   }
 }
