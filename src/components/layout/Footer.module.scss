@@ -252,21 +252,6 @@
   }
 }
 
-// VISA Logo Text
-.visaLogoText {
-  font-family: 'Noto Serif', serif;
-  font-size: 1.5rem;
-  font-weight: 700;
-  font-style: italic;
-  color: #1a1a1a;
-  letter-spacing: -0.5px;
-  transition: opacity 0.2s;
-
-  &:hover {
-    opacity: 0.8;
-  }
-}
-
 // Mastercard Logo
 .mastercardLogo {
   display: flex;
@@ -425,9 +410,6 @@
     }
   }
 
-  .visaLogoText {
-    color: #ffffff;
-  }
 
   .copyright,
   .bottomLink {
@@ -453,5 +435,21 @@
 
   .bottomBar {
     border-top-color: #333333;
+  }
+}
+.visaLogo {
+  display: flex;
+  align-items: center;
+  line-height: 0;
+}
+
+.visaImage {
+  width: auto;
+  height: 35px;
+  object-fit: contain;
+  transition: transform 0.2s;
+
+  &:hover {
+    transform: scale(1.05);
   }
 }

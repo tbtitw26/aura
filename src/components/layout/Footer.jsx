@@ -174,8 +174,14 @@ export default function Footer() {
               </div>
             </div>
             <div className={styles.paymentItem}>
-              <div className={styles.visaLogoText}>
-                <span>VISA</span>
+              <div className={styles.visaLogo}>
+                <Image 
+                  src="/visa-logo.svg" 
+                  alt="Visa"
+                  width={50}
+                  height={35}
+                  className={styles.visaImage}
+                />
               </div>
             </div>
             <div className={styles.paymentItem}>
