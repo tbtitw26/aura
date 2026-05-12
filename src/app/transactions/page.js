@@ -11,87 +11,35 @@ export default function Transactions() {
   const [isLoading, setIsLoading] = useState(true)
   const [visibleCount, setVisibleCount] = useState(5)
 
-  // Mock data - в реальному проекті завантажувати з API
-  const allTransactions = [
-    {
-      id: 1,
-      merchant: 'Farfetch',
-      merchantInitial: 'F',
-      date: 'Oct 12, 2023',
-      timestamp: '2023-10-12',
-      cardLastFour: '4209',
-      amount: 1450.00,
-      currency: '£',
-      status: 'completed'
-    },
-    {
-      id: 2,
-      merchant: 'SSENSE',
-      merchantInitial: 'S',
-      date: 'Oct 10, 2023',
-      timestamp: '2023-10-10',
-      cardLastFour: '4209',
-      amount: 890.00,
-      currency: '£',
-      status: 'completed'
-    },
-    {
-      id: 3,
-      merchant: 'Mytheresa',
-      merchantInitial: 'M',
-      date: 'Oct 09, 2023',
-      timestamp: '2023-10-09',
-      cardLastFour: '4209',
-      amount: 2100.00,
-      currency: '£',
-      status: 'pending'
-    },
-    {
-      id: 4,
-      merchant: 'Net-a-Porter',
-      merchantInitial: 'N',
-      date: 'Oct 05, 2023',
-      timestamp: '2023-10-05',
-      cardLastFour: '4209',
-      amount: 3200.00,
-      currency: '£',
-      status: 'completed'
-    },
-    {
-      id: 5,
-      merchant: 'LuisaViaRoma',
-      merchantInitial: 'L',
-      date: 'Sep 28, 2023',
-      timestamp: '2023-09-28',
-      cardLastFour: '4209',
-      amount: 560.00,
-      currency: '£',
-      status: 'completed'
-    },
-    {
-      id: 6,
-      merchant: 'Browns Fashion',
-      merchantInitial: 'B',
-      date: 'Sep 20, 2023',
-      timestamp: '2023-09-20',
-      cardLastFour: '4209',
-      amount: 1890.00,
-      currency: '£',
-      status: 'completed'
-    }
-  ]
-
   useEffect(() => {
-    // Симуляція завантаження даних
-    setTimeout(() => {
-      setTransactions(allTransactions)
-      setIsLoading(false)
-    }, 500)
+    let cancelled = false
+    ;(async () => {
+      try {
+        const headers = {}
+        const t = typeof window !== 'undefined' ? localStorage.getItem('auth-token') : null
+        if (t) headers['Authorization'] = `Bearer ${t}`
+        const res = await fetch('/api/transactions', { credentials: 'same-origin', headers })
+        if (!res.ok) {
+          if (!cancelled) setTransactions([])
+          return
+        }
+        const data = await res.json()
+        if (!cancelled) setTransactions(data.transactions || [])
+      } catch (e) {
+        console.error(e)
+        if (!cancelled) setTransactions([])
+      } finally {
+        if (!cancelled) setIsLoading(false)
+      }
+    })()
+    return () => {
+      cancelled = true
+    }
   }, [])
 
   // Фільтрація транзакцій
   const filteredTransactions = transactions.filter(transaction => {
-    const matchesSearch = transaction.merchant.toLowerCase().includes(searchTerm.toLowerCase())
+    const matchesSearch = (transaction.merchant || '').toLowerCase().includes(searchTerm.toLowerCase())
     const matchesStatus = statusFilter === '' || transaction.status === statusFilter
     
     let matchesDate = true
@@ -123,10 +71,28 @@ export default function Transactions() {
         return styles.statusCompleted
       case 'pending':
         return styles.statusPending
+      case 'failed':
+      case 'refunded':
+        return styles.statusDefault
       default:
         return styles.statusDefault
     }
   }
+
+  const formatCardSuffix = (last) => {
+    if (!last || last === '—') return '—'
+    if (last === 'removed') return 'Removed'
+    return last
+  }
+
+  const formatAmountCell = (t) => {
+    const n = typeof t.amount === 'number' ? t.amount : parseFloat(t.amount)
+    const abs = (Number.isFinite(n) ? n : 0).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+    if (t.type === 'deposit') return `+${t.currency}${abs}`
+    return `−${t.currency}${abs}`
+  }
+
+  const statusLabel = (s) => (s ? s.charAt(0).toUpperCase() + s.slice(1) : '')
 
   return (
     <main className={styles.main}>
@@ -161,6 +127,8 @@ export default function Transactions() {
               <option value="">Status: All</option>
               <option value="completed">Completed</option>
               <option value="pending">Pending</option>
+              <option value="failed">Failed</option>
+              <option value="refunded">Refunded</option>
             </select>
             <span className="material-symbols-outlined">expand_more</span>
           </div>
@@ -214,7 +182,7 @@ export default function Transactions() {
                     <div className={styles.merchantInfo}>
                       <span className={styles.merchantName}>{transaction.merchant}</span>
                       <span className={styles.mobileDetails}>
-                        {transaction.date} • **** {transaction.cardLastFour}
+                        {transaction.date} • {formatCardSuffix(transaction.cardLastFour) === '—' || formatCardSuffix(transaction.cardLastFour) === 'Removed' ? formatCardSuffix(transaction.cardLastFour) : `**** ${formatCardSuffix(transaction.cardLastFour)}`}
                       </span>
                     </div>
                   </div>
@@ -225,17 +193,21 @@ export default function Transactions() {
                   
                   <div className={styles.transactionCard}>
                     <span className="material-symbols-outlined">credit_card</span>
-                    •••• {transaction.cardLastFour}
+                    {formatCardSuffix(transaction.cardLastFour) === '—' || formatCardSuffix(transaction.cardLastFour) === 'Removed' ? (
+                      <span>{formatCardSuffix(transaction.cardLastFour)}</span>
+                    ) : (
+                      <span>•••• {transaction.cardLastFour}</span>
+                    )}
                   </div>
                   
                   <div className={styles.transactionStatus}>
                     <span className={`${styles.statusBadge} ${getStatusBadgeClass(transaction.status)}`}>
-                      {transaction.status === 'completed' ? 'Completed' : 'Pending'}
+                      {statusLabel(transaction.status)}
                     </span>
                   </div>
                   
                   <div className={styles.transactionAmount}>
-                    {transaction.currency}{transaction.amount.toLocaleString()}
+                    {formatAmountCell(transaction)}
                   </div>
                 </div>
               ))}

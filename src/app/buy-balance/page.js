@@ -18,6 +18,7 @@ export default function BuyBalance() {
   const [isProcessing, setIsProcessing] = useState(false)
   const [errors, setErrors] = useState({})
   const [fees, setFees] = useState(0)
+  const [virtualCardGate, setVirtualCardGate] = useState({ loading: true, hasCard: true })
 
   const currencySymbols = {
     EUR: '€',
@@ -36,6 +37,31 @@ export default function BuyBalance() {
     const amountNum = parseFloat(amount) || 0
     setFees(amountNum * 0.015)
   }, [amount])
+
+  useEffect(() => {
+    let cancelled = false
+    ;(async () => {
+      try {
+        const headers = {}
+        const t = typeof window !== 'undefined' ? localStorage.getItem('auth-token') : null
+        if (t) headers['Authorization'] = `Bearer ${t}`
+        const res = await fetch('/api/cards', { credentials: 'same-origin', headers })
+        if (cancelled) return
+        if (res.ok) {
+          const data = await res.json()
+          const n = (data.cards || []).length
+          setVirtualCardGate({ loading: false, hasCard: n > 0 })
+        } else {
+          setVirtualCardGate({ loading: false, hasCard: true })
+        }
+      } catch {
+        if (!cancelled) setVirtualCardGate({ loading: false, hasCard: true })
+      }
+    })()
+    return () => {
+      cancelled = true
+    }
+  }, [])
 
   const handleAmountChange = (e) => {
     const value = e.target.value
@@ -127,6 +153,7 @@ export default function BuyBalance() {
     try {
       const response = await fetch('/api/wallet/top-up', {
         method: 'POST',
+        credentials: 'same-origin',
         headers: {
           'Content-Type': 'application/json',
         },
@@ -165,6 +192,29 @@ export default function BuyBalance() {
           <p className={styles.pageSubtitle}>Top up your balance securely and instantly</p>
         </div>
 
+        {virtualCardGate.loading ? (
+          <p className={styles.pageSubtitle} style={{ marginTop: 24 }}>Checking your account…</p>
+        ) : !virtualCardGate.hasCard ? (
+          <div
+            style={{
+              maxWidth: 520,
+              margin: '32px auto',
+              padding: 24,
+              border: '1px solid rgba(0,0,0,0.08)',
+              borderRadius: 8,
+              textAlign: 'center',
+            }}
+          >
+            <h2 style={{ fontSize: '1.25rem', marginBottom: 12 }}>Create a virtual card first</h2>
+            <p style={{ marginBottom: 20, lineHeight: 1.5, opacity: 0.9 }}>
+              Wallet top-ups need at least one Aura virtual card. After you create it, you can add funds using your bank card below.
+            </p>
+            <Link href="/virtual-card/create" className={styles.confirmBtn} style={{ display: 'inline-flex', alignItems: 'center', gap: 8, textDecoration: 'none', justifyContent: 'center' }}>
+              <span>Create virtual card</span>
+              <span className="material-symbols-outlined">arrow_forward</span>
+            </Link>
+          </div>
+        ) : (
         <div className={styles.contentGrid}>
           {/* Left Column: Form */}
           <div className={styles.formColumn}>
@@ -370,6 +420,7 @@ export default function BuyBalance() {
             </div>
           </div>
         </div>
+        )}
       </main>
 
       {/* BottomNavBar (Mobile Only) */}

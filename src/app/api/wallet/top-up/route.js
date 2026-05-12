@@ -3,6 +3,7 @@ export const runtime = 'nodejs';
 import { NextResponse } from 'next/server';
 import { connectToDatabase } from '@/lib/db';
 import Wallet from '@/models/Wallet';
+import Card from '@/models/Card';
 import Transaction from '@/models/Transaction';
 import { verifyToken } from '@/lib/auth';
 import { config } from '@/config';
@@ -30,6 +31,17 @@ export async function POST(request) {
     const wallet = await Wallet.findOne({ userId: decoded.userId });
     if (!wallet) {
       return NextResponse.json({ error: 'Wallet not found' }, { status: 404 });
+    }
+
+    const hasVirtualCard = await Card.exists({ userId: decoded.userId });
+    if (!hasVirtualCard) {
+      return NextResponse.json(
+        {
+          error:
+            'Add an Aura virtual card first. Wallet top-ups are enabled once you have at least one active virtual card.',
+        },
+        { status: 400 }
+      );
     }
 
     // Simulate payment processing here (integrate payment gateway in production)

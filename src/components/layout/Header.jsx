@@ -1,74 +1,70 @@
 'use client'
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useLayoutEffect, useRef } from 'react'
 import Link from 'next/link'
-import { usePathname, useRouter } from 'next/navigation'
+import { usePathname } from 'next/navigation'
 import styles from './Header.module.scss'
 
 export default function Header() {
   const pathname = usePathname()
-  const router = useRouter()
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [isLoggedIn, setIsLoggedIn] = useState(false)
   const [userName, setUserName] = useState('')
   const [scrolled, setScrolled] = useState(false)
-  const [isLoading, setIsLoading] = useState(true)
+  const [authResolved, setAuthResolved] = useState(false)
   const isMounted = useRef(true)
-  const authChecked = useRef(false)
 
-  // Перевірка auth статусу - тільки один раз
-  const checkAuthStatus = async () => {
-    if (authChecked.current) {
-      setIsLoading(false)
-      return
-    }
-    
-    if (!isMounted.current) return
-    
-    setIsLoading(true)
-    try {
-      const token = localStorage.getItem('auth-token')
-      
-      if (!token) {
-        setIsLoggedIn(false)
-        setUserName('')
-        authChecked.current = true
-        setIsLoading(false)
-        return
-      }
-      
-      const response = await fetch('/api/auth/me', {
-        headers: {
-          'Authorization': `Bearer ${token}`
-        }
-      })
-      
-      if (!isMounted.current) return
-      
-      if (response.ok) {
-        const data = await response.json()
-        setIsLoggedIn(true)
-        setUserName(data.user?.firstName || '')
-      } else {
-        localStorage.removeItem('auth-token')
-        setIsLoggedIn(false)
-        setUserName('')
-      }
-    } catch (error) {
-      console.error('Auth check error:', error)
+  // Гість без токена: authResolved одразу в layout effect (до paint), щоб не «висів» скелетон на Login/Sign Up.
+  // З токеном: лишаємо скелетон у actions, доки /api/auth/me не відповість.
+  useLayoutEffect(() => {
+    isMounted.current = true
+
+    const token = localStorage.getItem('auth-token')
+    if (!token) {
       setIsLoggedIn(false)
       setUserName('')
-    } finally {
-      if (isMounted.current) {
-        authChecked.current = true
-        setIsLoading(false)
+      setAuthResolved(true)
+      return () => {
+        isMounted.current = false
       }
     }
-  }
 
-  useEffect(() => {
-    checkAuthStatus()
-    
+    let cancelled = false
+
+    ;(async () => {
+      try {
+        const response = await fetch('/api/auth/me', {
+          credentials: 'same-origin',
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+
+        if (cancelled || !isMounted.current) return
+
+        if (response.ok) {
+          const data = await response.json()
+          setIsLoggedIn(true)
+          setUserName(data.user?.firstName || '')
+        } else {
+          localStorage.removeItem('auth-token')
+          setIsLoggedIn(false)
+          setUserName('')
+        }
+      } catch (error) {
+        console.error('Auth check error:', error)
+        if (!cancelled && isMounted.current) {
+          setIsLoggedIn(false)
+          setUserName('')
+        }
+      } finally {
+        if (!cancelled && isMounted.current) {
+          setAuthResolved(true)
+        }
+      }
+    })()
+
     return () => {
+      cancelled = true
       isMounted.current = false
     }
   }, [])
@@ -111,33 +107,17 @@ export default function Header() {
   ] : []
 
   const allNavItems = [...authNavItems, ...mainNavItems]
-
-  if (isLoading) {
-    return (
-      <header className={`${styles.header} ${scrolled ? styles.scrolled : ''}`}>
-        <div className={styles.container}>
-          <div className={styles.skeletonLogo}></div>
-          <nav className={styles.desktopNav}>
-            <div className={styles.skeletonNav}></div>
-          </nav>
-          <div className={styles.actions}>
-            <div className={styles.skeletonBtn}></div>
-            <div className={styles.skeletonBtn}></div>
-          </div>
-        </div>
-      </header>
-    )
-  }
+  const navItems = authResolved ? allNavItems : mainNavItems
 
   return (
     <header className={`${styles.header} ${scrolled ? styles.scrolled : ''}`}>
       <div className={styles.container}>
-        <Link href={isLoggedIn ? '/wallet' : '/'} className={styles.logo}>
+        <Link href={authResolved && isLoggedIn ? '/wallet' : '/'} className={styles.logo}>
           AURA
         </Link>
 
         <nav className={styles.desktopNav}>
-          {allNavItems.map((item) => (
+          {navItems.map((item) => (
             <Link
               key={item.href}
               href={item.href}
@@ -149,20 +129,25 @@ export default function Header() {
         </nav>
 
         <div className={styles.actions}>
-          {isLoggedIn ? (
+          {!authResolved ? (
             <>
-              <button className={styles.iconBtn}>
+              <div className={styles.skeletonBtn} aria-hidden />
+              <div className={styles.skeletonBtn} aria-hidden />
+            </>
+          ) : isLoggedIn ? (
+            <>
+              <button type="button" className={styles.iconBtn}>
                 <span className="material-symbols-outlined">shopping_bag</span>
               </button>
               <div className={styles.userMenu}>
-                <button className={styles.userBtn}>
+                <button type="button" className={styles.userBtn}>
                   <span className="material-symbols-outlined">account_circle</span>
                   <span className={styles.userName}>{userName || 'Account'}</span>
                 </button>
                 <div className={styles.dropdown}>
                   <Link href="/profile">Profile</Link>
                   <Link href="/settings">Settings</Link>
-                  <button onClick={handleLogout}>Logout</button>
+                  <button type="button" onClick={handleLogout}>Logout</button>
                 </div>
               </div>
             </>
@@ -173,7 +158,8 @@ export default function Header() {
             </>
           )}
 
-          <button 
+          <button
+            type="button"
             className={styles.mobileMenuBtn}
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           >
@@ -186,7 +172,7 @@ export default function Header() {
 
       <div className={`${styles.mobileMenu} ${isMobileMenuOpen ? styles.open : ''}`}>
         <div className={styles.mobileMenuContent}>
-          {allNavItems.map((item) => (
+          {navItems.map((item) => (
             <Link
               key={item.href}
               href={item.href}
@@ -196,7 +182,7 @@ export default function Header() {
               {item.label}
             </Link>
           ))}
-          {!isLoggedIn && (
+          {authResolved && !isLoggedIn && (
             <div className={styles.mobileAuthBtns}>
               <Link href="/login" className={styles.mobileLoginBtn} onClick={() => setIsMobileMenuOpen(false)}>
                 Login
@@ -206,8 +192,8 @@ export default function Header() {
               </Link>
             </div>
           )}
-          {isLoggedIn && (
-            <button onClick={() => { handleLogout(); setIsMobileMenuOpen(false); }} className={styles.mobileLogoutBtn}>
+          {authResolved && isLoggedIn && (
+            <button type="button" onClick={() => { handleLogout(); setIsMobileMenuOpen(false); }} className={styles.mobileLogoutBtn}>
               Logout
             </button>
           )}

@@ -40,7 +40,7 @@ walletSchema.pre('save', function() {
 
 // Method to add balance
 walletSchema.methods.addBalance = async function(currency, amount) {
-  if (!this.balances[currency]) {
+  if (!Object.prototype.hasOwnProperty.call(this.balances, currency)) {
     throw new Error(`Currency ${currency} not supported`);
   }
   
@@ -53,7 +53,7 @@ walletSchema.methods.addBalance = async function(currency, amount) {
 
 // Method to deduct balance
 walletSchema.methods.deductBalance = async function(currency, amount) {
-  if (!this.balances[currency]) {
+  if (!Object.prototype.hasOwnProperty.call(this.balances, currency)) {
     throw new Error(`Currency ${currency} not supported`);
   }
   

@@ -3,7 +3,6 @@ export const runtime = 'nodejs';
 import { NextResponse } from 'next/server';
 import { connectToDatabase } from '@/lib/db';
 import Card from '@/models/Card';
-import User from '@/models/User';
 import { verifyToken } from '@/lib/auth';
 
 export async function DELETE(request, { params }) {
@@ -24,7 +23,9 @@ export async function DELETE(request, { params }) {
     const card = await Card.findById(cardId);
     if (!card) return NextResponse.json({ error: 'Card not found' }, { status: 404 });
 
-    if (card.userId.toString() !== decoded.userId) {
+    const ownerId = card.userId?.toString?.() ?? String(card.userId);
+    const sessionUserId = decoded.userId?.toString?.() ?? String(decoded.userId);
+    if (ownerId !== sessionUserId) {
       return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
     }
 

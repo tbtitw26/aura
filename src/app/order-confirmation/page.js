@@ -44,8 +44,16 @@ function OrderConfirmationContent() {
             setTransactionData(prev => ({
               ...prev,
               ...data,
-              amount: data.amount.toFixed(2),
-              newBalance: data.newBalance ? data.newBalance.toFixed(2) : prev.newBalance
+              amount:
+                data.amount != null && !Number.isNaN(parseFloat(data.amount))
+                  ? parseFloat(data.amount).toFixed(2)
+                  : prev.amount,
+              newBalance:
+                data.newBalance != null &&
+                data.newBalance !== '' &&
+                !Number.isNaN(parseFloat(data.newBalance))
+                  ? parseFloat(data.newBalance).toFixed(2)
+                  : prev.newBalance
             }))
           }
         }

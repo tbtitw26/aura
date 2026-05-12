@@ -67,7 +67,7 @@ export default function Wallet() {
     setIsLoading(true)
     // Navigate to create virtual card page
     setTimeout(() => {
-      window.location.href = '/virtual-card'
+      window.location.href = '/virtual-card/create'
     }, 300)
   }
 

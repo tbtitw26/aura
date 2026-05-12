@@ -76,16 +76,33 @@ export default function CreateVirtualCard() {
     setIsLoading(true)
     
     try {
+      const savedToken = typeof window !== 'undefined' ? localStorage.getItem('auth-token') : null
+      const headers = { 'Content-Type': 'application/json' }
+      if (savedToken) headers['Authorization'] = `Bearer ${savedToken}`
+
+      const last4 = String(Math.floor(1000 + Math.random() * 9000))
+      const now = new Date()
+      const expMonth = now.getMonth() + 1
+      const expYear = (now.getFullYear() + 3) % 100
+
       const response = await fetch('/api/cards', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers,
+        credentials: 'same-origin',
         body: JSON.stringify({
-          name: formData.cardName,
-          limit: formData.amount ? parseFloat(formData.amount) : null,
-          currency: formData.currency,
-          type: formData.cardType,
-          merchantLock: formData.merchant || null,
-          expiryDays: parseInt(formData.expiry)
+          brand: 'VISA',
+          last4,
+          expMonth,
+          expYear,
+          cardholderName: formData.cardName.trim() || 'Virtual Card',
+          isVirtual: true,
+          metadata: {
+            spendingLimit: formData.amount ? parseFloat(formData.amount) : null,
+            currency: formData.currency,
+            cardType: formData.cardType,
+            merchantLock: formData.merchant || null,
+            expiryDays: parseInt(formData.expiry, 10) || 30,
+          },
         }),
       })
       
