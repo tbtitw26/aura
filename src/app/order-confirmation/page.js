@@ -22,21 +22,33 @@ function OrderConfirmationContent() {
     // Get transaction data from URL params or localStorage
     const txId = searchParams.get('tx')
     const amount = searchParams.get('amount')
+    const currency = searchParams.get('currency')
+    const newBalance = searchParams.get('newBalance')
     
     if (amount) {
       setTransactionData(prev => ({
         ...prev,
-        amount: amount,
-        transactionId: txId || prev.transactionId
+        amount: parseFloat(amount).toFixed(2),
+        transactionId: txId || prev.transactionId,
+        newBalance: newBalance ? parseFloat(newBalance).toFixed(2) : prev.newBalance
       }))
     }
     
     // In real app, fetch transaction details from API
     const fetchTransactionDetails = async () => {
       try {
-        // const response = await fetch(`/api/transactions/${txId}`)
-        // const data = await response.json()
-        // setTransactionData(data)
+        if (txId) {
+          const response = await fetch(`/api/transactions/${txId}`)
+          if (response.ok) {
+            const data = await response.json()
+            setTransactionData(prev => ({
+              ...prev,
+              ...data,
+              amount: data.amount.toFixed(2),
+              newBalance: data.newBalance ? data.newBalance.toFixed(2) : prev.newBalance
+            }))
+          }
+        }
       } catch (error) {
         console.error('Failed to fetch transaction:', error)
       }

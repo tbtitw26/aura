@@ -124,26 +124,32 @@ export default function BuyBalance() {
     
     setIsProcessing(true)
     
-    // Simulate payment processing
     try {
-      await new Promise(resolve => setTimeout(resolve, 2000))
+      const response = await fetch('/api/wallet/top-up', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          amount: parseFloat(amount),
+          currency,
+          description: 'Top-up via card',
+        }),
+      })
       
-      // Store transaction in localStorage for demo
-      const transaction = {
-        id: 'TXN-' + Date.now(),
-        amount: parseFloat(amount),
-        currency,
-        date: new Date().toISOString(),
-        status: 'completed'
+      if (!response.ok) {
+        const errorData = await response.json()
+        throw new Error(errorData.error || 'Payment failed')
       }
       
-      localStorage.setItem('lastTransaction', JSON.stringify(transaction))
+      const data = await response.json()
+      const { transaction, wallet } = data
       
-      // Redirect to confirmation page
-      router.push(`/order-confirmation?amount=${amount}&currency=${currency}`)
+      // Redirect to confirmation page with transaction details
+      router.push(`/order-confirmation?amount=${amount}&currency=${currency}&tx=${transaction._id}&newBalance=${wallet.totalBalance}`)
     } catch (error) {
       console.error('Payment failed:', error)
-      setErrors({ submit: 'Payment failed. Please try again.' })
+      setErrors({ submit: error.message || 'Payment failed. Please try again.' })
     } finally {
       setIsProcessing(false)
     }
